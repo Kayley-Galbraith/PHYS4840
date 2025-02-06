@@ -1,0 +1,96 @@
+#!/usr/local/Anaconda2023/bin/python
+
+#At home I programmed this in Jupyter Notebook and emailed it to myself to put in sublime text. Let me know if there were any issues and I can send the original file from Jupyter notebook.
+#Homework 1 Problems 2-4
+
+#Problem 3
+import math as m
+
+def hw1_p3(x):
+    prime = [2]
+
+    for n in range(3, x+1, 2): #no even numbers are prime
+        if all(n % p != 0 for p in prime if p <= m.isqrt(n)): #utilizes statements in a,b, and c by 
+        #returning only if all conditions are true
+            prime.append(n)
+
+    return prime
+print(hw1_p3(10000))   
+
+#Problem 2
+
+def hw1_p2(x):
+    # Price list:
+    #      Ham - $3.65
+    #      Apple Brie - $4.25
+    #      PB&J - $3.00
+    #      Turkey - $3.35
+    # p indicates price. After name: Ham price = Hamp etc.
+
+    Hamp = 3.65
+    ABp = 4.25
+    PBJp = 3.00
+    Trkp = 3.35
+    sndwch_price = [Hamp, ABp, PBJp, Trkp]
+
+    # sandwich names
+    sndwch_name = ['Ham', 'Apple Brie', 'PB&J', 'Turkey']
+    hlf_sndwch_name = [name + ' half' for name in sndwch_name]
+    total_sw_name = sndwch_name + hlf_sndwch_name
+    
+    # List of whole and half sandwiches
+    hlf_sndwch = [price * 0.6 for price in sndwch_price]
+    total_sndwch = sndwch_price + hlf_sndwch
+    
+    combination = None  # optimal combo
+    remainder_min = float("inf")  # least spare change
+
+    # Generate combinations while ensuring at least one half sandwich is included
+    for i in range(len(total_sndwch)):
+        for j in range(i, len(total_sndwch)):
+            for k in range(j, len(total_sndwch)):
+                for l in range(k, len(total_sndwch)):
+                    for m in range(l, len(total_sndwch)):
+                        prices = [total_sndwch[i], total_sndwch[j], total_sndwch[k], total_sndwch[l], total_sndwch[m]]
+                        names = [total_sw_name[i], total_sw_name[j], total_sw_name[k], total_sw_name[l], total_sw_name[m]]
+
+                        half_sandwich_count = 0
+                        for price in prices:
+                            if price in hlf_sndwch:
+                                half_sandwich_count += 1
+                        
+                        if half_sandwich_count >= 1 and half_sandwich_count <= 1:
+                            total_cost = sum(prices)
+                            remainder = round(x - total_cost, 2)
+
+                            if remainder >= 0 and remainder % 0.25 == 0 and remainder < remainder_min:
+                                remainder_min = remainder
+                                combination = names
+
+    result = {}
+    for sandwich in combination:
+        if sandwich in result:
+            result[sandwich] += 1
+        else:
+            result[sandwich] = 1
+
+    return result, remainder_min
+
+
+#Problem 4
+
+def hw1_p4a(x):
+    if x == 0:
+        return 1
+    else:
+        return (4 * x - 2) / (x + 1) * hw1_p4a(x - 1)
+        
+print(hw1_p4a(100))
+
+def hw1_p4b(m, n):
+    if n == 0:
+        return m
+    else:
+        return hw1_p4b(n, m % n)
+
+print(hw1_p4b(108,192))
