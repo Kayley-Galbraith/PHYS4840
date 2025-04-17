@@ -1,1 +1,6 @@
+#!/usr/local/Anaconda2023/bin/python
+
 git init
+
+git remote add origin https://github.com/Kayley-Galbraith/PHYS4840.git
+git remote -v
